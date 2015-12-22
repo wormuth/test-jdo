@@ -1,28 +1,50 @@
 package mydomain.model;
 
-import javax.jdo.annotations.*;
+import java.util.HashMap;
+import java.util.Map;
 
-@PersistenceCapable(detachable="true")
-public class Person
-{
+import javax.jdo.annotations.Join;
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
+@PersistenceCapable(detachable = "true")
+public class Person {
     @PrimaryKey
-    Long id;
+    private Long id;
 
-    String name;
+    @Persistent
+    @Join(column = "TAG_ID")
+    private Map<Identity,Tag> tags;
 
-    public Person(long id, String name)
-    {
+    @Persistent
+    @Join(column = "REMARK_ID")
+    private Map<Identity,String> remarks;
+
+    public Person( long id ) {
         this.id = id;
-        this.name = name;
+        this.tags = new HashMap<>();
+        this.remarks = new HashMap<>();
     }
 
-    public String getName()
-    {
-        return name;
-    }
-
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
+
+    public void addTag( final Identity id, final Tag tag ) {
+        this.tags.put( id, tag );
+    }
+
+    public void addRemark( final Identity id, final String remark ) {
+        this.remarks.put( id, remark );
+    }
+
+    public Map<Identity,Tag> getTags() {
+        return this.tags;
+    }
+
+    public Map<Identity,String> getRemarks() {
+        return this.remarks;
+    }
+
 }
