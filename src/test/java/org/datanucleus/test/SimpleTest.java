@@ -57,7 +57,7 @@ public class SimpleTest {
             List<Person> persons = queryForRemarks.executeList();
             assertTrue( !persons.isEmpty() );
             
-            final Query<Person> queryForTags = pm.newQuery( Person.class, "this.tags.containsKey( 'id of tag' ) && this.tags.get( 'id of tag' ).indexOfTag ( 'tag' ) > -1" );
+            final Query<Person> queryForTags = pm.newQuery( Person.class, "this.tags.containsKey( 'id of tag' ) && this.tags.get( 'id of tag' ).indexOfTag( 'tag' ) > -1" );
             persons = queryForTags.executeList();
             assertTrue( !persons.isEmpty() );
 
