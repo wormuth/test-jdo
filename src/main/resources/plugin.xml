@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<plugin id="myplugin" name="mydomain.myplugin" provider-name="myview systems GmbH">
+    <extension point="org.datanucleus.type_converter">
+        <type-converter
+        	name="mydomain.model.Tag-string"
+        	member-type="mydomain.model.Tag"
+        	datastore-type="java.lang.String"
+            converter-class="mydomain.model.TagMapping" />
+        <type-converter
+        	name="mydomain.model.Identity-string"
+        	member-type="mydomain.model.Identity"
+        	datastore-type="java.lang.String"
+            converter-class="mydomain.model.IdentityMapping" />
+    </extension>
+    
+    <extension point="org.datanucleus.java_type">
+        <java-type name="mydomain.model.Identity"
+        	persistent="false"
+        	dfg="false"
+        	converter-name="mydomain.model.Identity-string"
+        	priority="100"
+        />
+        <java-type name="mydomain.model.Tag"
+        	persistent="false"
+        	dfg="false"
+        	converter-name="mydomain.model.Tag-string"
+        	priority="100"
+        />
+    </extension>
+    
+    <!-- SQL METHODS -->
+    <extension point="org.datanucleus.store.rdbms.sql_method">
+        <sql-method class="mydomain.model.Tag" method="indexOfTag"
+            evaluator="org.datanucleus.store.rdbms.sql.method.StringIndexOfMethod" datastore="h2" />
+    </extension>
+</plugin>
